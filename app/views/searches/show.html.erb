@@ -1,0 +1,22 @@
+<div class="my-4">
+  <h1>Search #<%= @search.id %></h1>
+  <h3>Uploaded Publications</h3>
+</div>
+
+<% @search.publications.each do |publication| %>
+  <div class="card my-2">
+    <div class="card-body">
+      <p class="card-text">
+      <%= fa_icon 'book' %> <%= publication.title %>
+      </p>
+
+      <%# <a href="#" class="card-link">Card link</a> %>
+      <%# <a href="#" class="card-link">Another link</a> %>
+    </div>
+  </div>
+<% end %>
+
+<div class="my-4">
+  <%= link_to 'Edit', edit_search_path(@search) %> |
+  <%= link_to 'Back', searches_path %>
+</div>

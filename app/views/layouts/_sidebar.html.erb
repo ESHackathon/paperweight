@@ -1,0 +1,7 @@
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li><%= active_link_to "My Searches", searches_path %></li>
+    <li><%= active_link_to "My Account", edit_user_registration_path %></li>
+    <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+  </ul>
+</div>

@@ -1,0 +1,9 @@
+{
+  "name": "eshackathon",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^4.1.0",
+    "bootswatch": "^4.0.0",
+    "jquery": "^3.3.1"
+  }
+}
