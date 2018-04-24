@@ -1,4 +1,5 @@
 class SearchesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_search, only: [:show, :edit, :update, :destroy]
   layout 'dashboard'
 
@@ -13,15 +14,7 @@ class SearchesController < ApplicationController
   def show
     respond_to do |format|
       format.html { }
-      format.json {
-        render json: @search.as_json.merge(
-          publications: @search.publications.map {|publication|
-            publication.as_json.merge({
-              authors: JSON.parse(publication.ris_hash)["authors"]
-            })
-          }
-        ).as_json
-      }
+      format.json { render json: @search.to_formatted_json }
     end
   end
 
@@ -42,7 +35,7 @@ class SearchesController < ApplicationController
     respond_to do |format|
       if @search.save
         format.html { redirect_to @search, notice: 'Search was successfully created.' }
-        format.json { render :show, status: :created, location: @search }
+        format.json { render json: @search.to_formatted_json, status: :created }
       else
         format.html { render :new }
         format.json { render json: @search.errors, status: :unprocessable_entity }

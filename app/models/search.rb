@@ -4,7 +4,7 @@ require 'json'
 class Search < ApplicationRecord
   has_many :publications, dependent: :destroy
   after_create :parse_ris
-  after_create :extract_keywords
+  # after_create :extract_keywords
 
   def to_formatted_json
     self.as_json.merge(
