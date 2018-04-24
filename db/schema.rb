@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_24_083611) do
+ActiveRecord::Schema.define(version: 2018_04_24_132011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2018_04_24_083611) do
     t.string "journal_name"
     t.string "issue_number"
     t.string "primary_date"
+    t.string "abstract"
     t.index ["search_id"], name: "index_publications_on_search_id"
   end
 
@@ -39,6 +40,7 @@ ActiveRecord::Schema.define(version: 2018_04_24_083611) do
     t.text "ris"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "raw_keyword_response"
   end
 
   create_table "users", force: :cascade do |t|

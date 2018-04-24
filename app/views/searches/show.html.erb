@@ -1,13 +1,14 @@
-<div class="my-4">
+<div class="mb-4">
   <h1>Search #<%= @search.id %></h1>
-  <h3>Uploaded Publications</h3>
+  <h3><%= @search.publications.count %> Uploaded Publications</h3>
 </div>
 
 <% @search.publications.each do |publication| %>
   <div class="card my-2">
     <div class="card-body">
+      <h5 class="card-title"><%= fa_icon 'book' %> <%= publication.title %></h5>
       <p class="card-text">
-      <%= fa_icon 'book' %> <%= publication.title %>
+        <%= publication.abstract %>
       </p>
 
       <%# <a href="#" class="card-link">Card link</a> %>

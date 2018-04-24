@@ -11,4 +11,14 @@ rails db:create db:migrate
 rails server
 ```
 
-Upload a RIS file, and go to `/searches/1.json` to see the parsed json
+## Data Science
+
+Parsing the keywords and data science stuff is done in Python, run the flask app (from https://github.com/ESHackathon/keywords_extract) and place the local address in the `flask.rb` file
+
+`FLASK_APP_ADDRESS="http://127.0.0.1:5000/keyword-extraction"`
+
+## API Endpoints
+
+*POST* `/searches` - Create a new search, responds with the parsed RIS file
+*GET* `/searches/:id.json` - A JSON response on an uploaded RIS file...
+

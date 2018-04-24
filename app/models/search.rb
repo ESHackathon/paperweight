@@ -1,6 +1,20 @@
+require 'httparty'
+require 'json'
+
 class Search < ApplicationRecord
   has_many :publications, dependent: :destroy
   after_create :parse_ris
+  after_create :extract_keywords
+
+  def to_formatted_json
+    self.as_json.merge(
+      publications: self.publications.map {|pub|
+        pub.as_json.merge({
+          authors: JSON.parse(pub.ris_hash)["authors"]
+        })
+      }
+    ).as_json
+  end
 
   def parse_ris
     ris = split_ris_records(self.ris)
@@ -12,6 +26,7 @@ class Search < ApplicationRecord
         publication_year: hash[:publication_year],
         primary_title:    hash[:primary_title],
         secondary_title:  hash[:secondary_title],
+        abstract:         hash[:abstract],
         start_page:       hash[:start_page],
         end_page:         hash[:end_page],
         volume_number:    hash[:volume_number],
@@ -25,6 +40,20 @@ class Search < ApplicationRecord
     end
   end
 
+  def extract_keywords
+    res = HTTParty.post(
+      FLASH_APP_ADDRESS,
+      body: self.to_formatted_json,
+      headers: { 'Content-Type' => 'application/json' }
+    )
+
+    puts "_______________________RES___________________"
+    puts res
+    puts "_____________________________________________"
+
+    self.update_attributes(raw_keyword_response: res)
+  end
+
   def split_ris_records(ris)
     ris.split("\nER  -")
   end
@@ -34,6 +63,7 @@ class Search < ApplicationRecord
     lines = ris.split("\n").each {|line| line.strip }
 
     hash[:type]             = remove_ris_key(parse_ris_line(lines, "TY"))
+    hash[:abstract]         = remove_ris_key(parse_ris_line(lines, "AB"))
     hash[:publication_year] = remove_ris_key(parse_ris_line(lines, "PY"))
     hash[:authors]          = parse_ris_multiple_lines(lines, "AU")
     hash[:primary_title]    = remove_ris_key(parse_ris_line(lines, "T1"))
