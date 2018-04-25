@@ -3,6 +3,19 @@
   <h3><%= @search.publications.count %> Uploaded Publications</h3>
 </div>
 
+<div class="card my-4">
+  <div class="card-body">
+    <h3 class="card-title">Keyword Analysis</h3>
+    <p class="card-text">
+      <ul>
+        <% @keywords.first(20).each do |keyword| %>
+          <li><%= keyword %></li>
+        <% end %>
+      </ul>
+    </p>
+  </div>
+</div>
+
 <% @search.publications.each do |publication| %>
   <div class="card my-2">
     <div class="card-body">

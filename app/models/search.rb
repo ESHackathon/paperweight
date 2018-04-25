@@ -4,7 +4,7 @@ require 'json'
 class Search < ApplicationRecord
   has_many :publications, dependent: :destroy
   after_create :parse_ris
-  # after_create :extract_keywords
+  after_create :extract_keywords
 
   def to_formatted_json
     self.as_json.merge(
@@ -42,16 +42,15 @@ class Search < ApplicationRecord
 
   def extract_keywords
     res = HTTParty.post(
-      FLASH_APP_ADDRESS,
-      body: self.to_formatted_json,
-      headers: { 'Content-Type' => 'application/json' }
+      FLASK_APP_ADDRESS,
+      body: self.to_formatted_json.to_json,
+      headers: { 'Content-Type' => 'application/json' },
+      format: :json
     )
 
-    puts "_______________________RES___________________"
-    puts res
-    puts "_____________________________________________"
+    json = JSON.parse(res.body)
 
-    self.update_attributes(raw_keyword_response: res)
+    self.update_attributes(raw_keyword_response: json)
   end
 
   def split_ris_records(ris)

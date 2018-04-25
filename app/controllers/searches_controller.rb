@@ -12,6 +12,7 @@ class SearchesController < ApplicationController
   # GET /searches/1
   # GET /searches/1.json
   def show
+    @keywords = @search.raw_keyword_response["keywords"]
     respond_to do |format|
       format.html { }
       format.json { render json: @search.to_formatted_json }
