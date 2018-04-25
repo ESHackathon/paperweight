@@ -18,7 +18,10 @@ rails s
 
 ## 2. Flask App (Data Science)
 
-Parsing the keywords and data science stuff is done in Python, run the flask app (from https://github.com/ESHackathon/keywords_extract) and place the local address in the `flask.rb` file
+Find the repo here...
+https://github.com/ESHackathon/paperweight-python.git
+
+Parsing the keywords and data science stuff is done in Python, run the flask app (from https://github.com/ESHackathon/paperweight-python) and place the local address in the `flask.rb` file
 
 `FLASK_APP_ADDRESS="http://127.0.0.1:5000/keyword-extraction"`
 
