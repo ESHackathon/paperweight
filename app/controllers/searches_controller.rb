@@ -6,7 +6,7 @@ class SearchesController < ApplicationController
   # GET /searches
   # GET /searches.json
   def index
-    @searches = Search.all
+    @searches = Search.all.order('created_at DESC')
   end
 
   # GET /searches/1
